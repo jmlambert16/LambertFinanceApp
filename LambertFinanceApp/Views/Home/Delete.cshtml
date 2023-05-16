@@ -1,0 +1,13 @@
+﻿
+@{ ViewData["Title"] = "Delete"; }
+
+@model LambertFinanceApp.Models.Transactions;
+<!-- Delete -->
+<h2>Are you sure want to delete @Model.description?</h2>
+
+<form method="post" asp-action="Delete">
+    <button type="submit">Delete</button>
+    <a asp-controller="Home" asp-action="Index" class="btn-outline-primary">Cancel</a>
+
+    <input type="hidden" asp-for="transactionId" />
+</form>

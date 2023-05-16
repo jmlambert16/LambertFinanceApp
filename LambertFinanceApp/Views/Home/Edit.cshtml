@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model LambertFinanceApp.Models.Transactions
+
+<h1>Edit Transaction</h1>
+<form method="post" class="form-group">
+
+    <div asp-validation-summary="All"></div>
+
+    @if (Model != null && Model.transactionId != 0)
+    {
+        <input type="hidden" asp-for="transactionId" />
+    }
+
+    <label asp-for="date">Date</label>
+    <input value="@Model.date" id="date" asp-for="date" class="form-control" />
+
+    <label asp-for="@Model.CategoryID">Category</label>
+    <select asp-for="@Model.CategoryID">
+        <option value="">Select a Category</option>
+        @foreach (Category c in ViewBag.categories)
+        {
+            <option value="@c.CategoryId">@c.CategoryName</option>
+        }
+    </select>
+    <br />
+
+    <label asp-for="description">Description</label>
+    <textarea value="@Model.description" id="description" asp-for="description" class="form-control"></textarea>
+
+    <label asp-for="amount">Amount</label>
+    <input value="@Model.amount" id="amount" asp-for="amount" class="form-control" />
+
+    <label>Income</label>
+    <br />
+    <label class="switch">
+        <input type="checkbox" id="income" asp-for="@Model.income" class="form=control">
+        <span class="slider round"></span>
+    </label>
+    <br />
+
+    <label>Returned</label>
+    <br />
+    <label class="switch">
+        <input type="checkbox" id="income" asp-for="@Model.returned" class="form=control">
+        <span class="slider round"></span>
+    </label>
+    <br />
+
+    <input id="Form" type="submit" value="Update" class="form-control" />
+</form>
+

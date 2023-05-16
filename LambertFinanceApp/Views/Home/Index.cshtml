@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@model TransactionsViewModel
+
+
+
+<form method="post" class="form-group">
+    <div asp-validation-summary="All"></div>
+
+    <label asp-for="transactionsForm.date">Date</label>
+    <input id="date" asp-for="transactionsForm.date" class="form-control" />
+    <br />
+
+    <label>Category</label>
+    <br />
+    <select asp-for="transactionsForm.CategoryID">
+        <option value="">Select a Category</option>
+        @foreach (Category c in ViewBag.categories)
+        {
+            <option value="@c.CategoryId">@c.CategoryName</option>
+        }
+    </select>
+    <br />
+    <br />
+
+    <label asp-for="transactionsForm.description">Description</label>
+    <textarea id="description" asp-for="transactionsForm.description" class="form-control"></textarea>
+    <br />
+
+    <label asp-for="transactionsForm.amount">Amount</label>
+    <input id="amount" asp-for="transactionsForm.amount" class="form-control" />
+    <br />
+
+    <label>Income</label>
+    <br />
+    <label class="switch">
+        <input type="checkbox" id="income" asp-for="transactionsForm.income" class="form=control">
+        <span class="slider round"></span>
+    </label>
+    <br />
+
+    <input id="Form" type="submit" value="Submit" class="form-control" />
+</form>
+
+
+<h1>Transactions</h1>
+
+
+<div>
+    <a asp-controller="Home" asp-action="Index" asp-route-CategorId="" class="btn btn-outline-secondary">Home</a>
+    <div id="types">
+        @foreach (Category c in ViewBag.categories)
+        {
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary" asp-route-CategoryId="@c.CategoryId">@c.CategoryName</a>
+        }
+    </div>
+</div>
+
+
+
+<table class="table table-bordered table-striped">
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Date</td>
+            <td>Category</td>
+            <td>Description</td>
+            <td>Amount</td>
+            <td>Income</td>
+            <td>Returned</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.transactions)
+        {
+            <tr>
+                <td>@r.date</td>
+                <td>@r.Category.CategoryName</td>
+                <td>@r.description</td>
+                <td>@r.amount</td>
+                <td>@r.income</td>
+                <td>@r.returned</td>
+
+
+                <td><a asp-controller="Home" asp-action="Edit" asp-route-id="@r.transactionId">Edit</a></td>
+                <td><a asp-controller="Home" asp-action="Delete" asp-route-id="@r.transactionId">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div page-model="@Model.PageInfo" page-action="Index" page-classes-enabled="true"
+          page-class="btn" page-class-normal="btn-outline-dark"
+          page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
